@@ -115,6 +115,9 @@ type View struct {
 	// KeybindOnEdit should be set to true when you want to execute keybindings even when the view is editable
 	// (this is usually not the case)
 	KeybindOnEdit bool
+
+	// Set the maximum number of lines to store
+	MaxLines int
 }
 
 type viewLine struct {
@@ -363,6 +366,13 @@ func (v *View) WriteString(s string) {
 // writeRunes copies slice of runes into internal lines buffer.
 // caller must make sure that writing position is accessable.
 func (v *View) writeRunes(p []rune) {
+
+	// Cap the maximum number of lines in the view
+	if v.MaxLines > 0 && len(v.lines) > v.MaxLines {
+		cut := len(v.lines) - v.MaxLines
+		v.lines = v.lines[cut:]
+	}
+
 	for _, r := range p {
 		switch r {
 		case '\n':

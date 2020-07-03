@@ -387,7 +387,7 @@ func (v *View) writeRunes(p []rune) {
 			v.wx = 0
 		default:
 			cells := v.parseInput(r)
-			if cells == nil {
+			if cells == nil || len(cells) <= 0 {
 				continue
 			}
 			v.writeCells(v.wx, v.wy, cells)

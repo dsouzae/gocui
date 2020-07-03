@@ -109,8 +109,8 @@ func NewGui(mode OutputMode, supportOverlaps bool) (*Gui, error) {
 
 	g.stop = make(chan struct{})
 
-	g.tbEvents = make(chan termbox.Event, 20)
-	g.userEvents = make(chan userEvent, 20)
+	g.tbEvents = make(chan termbox.Event, 100)
+	g.userEvents = make(chan userEvent, 512)
 
 	if runtime.GOOS != "windows" {
 		g.maxX, g.maxY, err = g.getTermWindowSize()

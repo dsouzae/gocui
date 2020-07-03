@@ -395,6 +395,10 @@ func (g *Gui) Update(f func(*Gui) error) {
 	go func() { g.userEvents <- userEvent{f: f} }()
 }
 
+func (g *Gui) UpdateAsync(f func(*Gui) error) {
+	g.userEvents <- userEvent{f: f}
+}
+
 // A Manager is in charge of GUI's layout and can be used to build widgets.
 type Manager interface {
 	// Layout is called every time the GUI is redrawn, it must contain the

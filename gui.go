@@ -750,7 +750,10 @@ func (g *Gui) onKey(ev *termbox.Event) error {
 			break
 		}
 		if g.currentView != nil && g.currentView.Editable && g.currentView.Editor != nil {
-			g.currentView.Editor.Edit(g.currentView, Key(ev.Key), ev.Ch, Modifier(ev.Mod))
+			err := g.currentView.Editor.Edit(g.currentView, Key(ev.Key), ev.Ch, Modifier(ev.Mod))
+			if err != nil {
+				return err
+			}
 		}
 	case termbox.EventMouse:
 		mx, my := ev.MouseX, ev.MouseY
